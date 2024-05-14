@@ -19,6 +19,7 @@ import kotlinx.coroutines.delay
 class MemoryViewModel: ViewModel() {
     val dificulies = MemoryDificulty.entries.map { it.toString() }.toList()
     var isMenuDropdownExpanded = MutableLiveData(false)
+    var showingHelpDialog = MutableLiveData(false)
     var setings by mutableStateOf(MemoryStetings())
         private set
 
@@ -44,6 +45,14 @@ class MemoryViewModel: ViewModel() {
 
     fun clickDropdown(isExpanded: Boolean) {
         isMenuDropdownExpanded.value = isExpanded
+    }
+
+    fun showHelpDialog() {
+        showingHelpDialog.value = true
+    }
+
+    fun dismissHelpDialog() {
+        showingHelpDialog.value = false
     }
 
     fun setDificulty(dificulty: String) {
@@ -93,6 +102,8 @@ class MemoryViewModel: ViewModel() {
 
             if (clickedCard == cardId) {
                 memoryCardsList[cardId] = memoryCardsList[cardId].copy(memoryCardState = MemoryCardState.AMAGADA)
+                if (setings.dificulty == MemoryDificulty.Dificil)
+                    setings = setings.copy(fallos = setings.fallos + 1)
                 setings = setings.copy(movimientos = setings.movimientos + 1)
                 clickedCard = -1
             } else if (clickedCard < 0) {
@@ -121,11 +132,31 @@ class MemoryViewModel: ViewModel() {
             memoryCardsList[clickedCard].copy(memoryCardState = MemoryCardState.AMAGADA)
         memoryCardsList[clickedCard2] =
             memoryCardsList[clickedCard2].copy(memoryCardState = MemoryCardState.AMAGADA)
+        setings = setings.copy(fallos = setings.fallos + 1)
         setings = setings.copy(movimientos = setings.movimientos + 1)
         clickedCard = -1
 
         setings = setings.copy(isACardClicked = false)
         sleep.value = false
 
+    }
+
+    fun calcularPuntuacion() {
+        setings = setings.copy(
+            points = setings.points + (setings.aciertos * 2) - setings.fallos
+        )
+    }
+
+    fun saveGameResult() {
+
+    }
+
+    fun resetGame() {
+        setings = setings.copy(
+            movimientos = 0,
+            points = 10,
+            aciertos = 0,
+            fallos = 0
+        )
     }
 }
