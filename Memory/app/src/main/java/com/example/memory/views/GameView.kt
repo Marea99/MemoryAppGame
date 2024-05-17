@@ -2,7 +2,6 @@ package com.example.memory.views
 
 import android.util.Log
 import androidx.compose.foundation.ScrollState
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -11,7 +10,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -26,10 +24,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.memory.R
 import com.example.memory.Routes
 import com.example.memory.components.MemoryCardComponent
-import com.example.memory.models.MemoryCardState
 import com.example.memory.viewModels.MemoryViewModel
 import kotlinx.coroutines.delay
 
@@ -76,6 +72,7 @@ fun GameBodyView(paddingValues: PaddingValues, viewModel: MemoryViewModel, navCo
                     card,
                     dificulty = viewModel.setings.dificulty
                 ) {
+                    Log.i("CLICK", viewModel.setings.isACardClicked.toString())
                     if (!viewModel.setings.isACardClicked)
                         viewModel.onClickMemoryCard(card.id)
                 }
@@ -96,6 +93,7 @@ fun GameBodyView(paddingValues: PaddingValues, viewModel: MemoryViewModel, navCo
         if (gameOver) {
             delay(750)
             viewModel.calcularPuntuacion()
+            navController.popBackStack()
             navController.navigate(Routes.Results.route)
         }
     }

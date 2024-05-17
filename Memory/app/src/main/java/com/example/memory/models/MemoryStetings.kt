@@ -1,5 +1,6 @@
 package com.example.memory.models
 
+
 data class MemoryStetings(
     val dificulty: MemoryDificulty = MemoryDificulty.Media,
     val isACardClicked: Boolean = false,

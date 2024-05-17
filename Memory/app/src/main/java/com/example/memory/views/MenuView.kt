@@ -38,7 +38,6 @@ import androidx.navigation.NavController
 import com.example.memory.R
 import com.example.memory.Routes
 import com.example.memory.components.HelpDialog
-import com.example.memory.components.MyOwnDropdown
 import com.example.memory.components.MyOwnRadioButtons
 import com.example.memory.viewModels.MemoryViewModel
 
@@ -64,6 +63,8 @@ fun MenuView(navController: NavController, viewModel: MemoryViewModel) {
 @Composable
 fun MenuBodyView(paddingValues: PaddingValues, viewModel: MemoryViewModel, navController: NavController) {
     val showingHelpDialog by viewModel.showingHelpDialog.observeAsState(false)
+    val menuStarted: Boolean by viewModel.sleep.observeAsState(false)
+
     val rainbowColorsBrush = remember {
         Brush.sweepGradient(
             listOf(
@@ -120,16 +121,13 @@ fun MenuBodyView(paddingValues: PaddingValues, viewModel: MemoryViewModel, navCo
                 shape = RoundedCornerShape(8.dp),
                 onClick = {
                     viewModel.getMemoryCardList()
-                    navController.navigate(Routes.Game.route)
 
-//                    navController.navigate(item.route) {
-//                        navController.graph.startDestinationRoute?.let {
-//                            popUpTo(it)
-////                            saveState = true
-//                        }
-//                        launchSingleTop = true
-//                        restoreState = true
-//                    }
+                    if (menuStarted)
+                        navController.popBackStack()
+                    else
+                        viewModel.menuStarted.value = false
+
+                    navController.navigate(Routes.Game.route)
                 }
             ) {
                 Icon(imageVector = Icons.Default.PlayArrow, contentDescription = "Play")

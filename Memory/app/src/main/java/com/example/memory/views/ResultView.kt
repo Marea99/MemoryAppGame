@@ -5,18 +5,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.twotone.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -27,11 +23,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -58,6 +54,8 @@ fun ResultView(navController: NavController, viewModel: MemoryViewModel) {
 
 @Composable
 fun ResultBodyView(paddingValues: PaddingValues, viewModel: MemoryViewModel, navController: NavController) {
+    val name by viewModel.name.observeAsState("")
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -111,7 +109,12 @@ fun ResultBodyView(paddingValues: PaddingValues, viewModel: MemoryViewModel, nav
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                TextField(value = "", onValueChange = { /* TODO */ })
+                TextField(
+                    value = name,
+                    onValueChange = {
+                        viewModel.setName(it)
+                    }
+                )
                 Button(
                     modifier = Modifier,
                     onClick = { /*TODO*/ }
@@ -138,7 +141,8 @@ fun ResultBodyView(paddingValues: PaddingValues, viewModel: MemoryViewModel, nav
                 shape = RoundedCornerShape(8.dp),
                 onClick = {
                     viewModel.resetGame()
-                    navController.navigate(Routes.Menu.route)
+                    navController.popBackStack()
+                    //navController.navigate(Routes.Menu.route)
                 }
             ) {
                 Icon(imageVector = Icons.Default.Home, contentDescription = "Go to menu")
@@ -151,6 +155,7 @@ fun ResultBodyView(paddingValues: PaddingValues, viewModel: MemoryViewModel, nav
                 onClick = {
                     viewModel.resetGame()
                     viewModel.getMemoryCardList()
+                    navController.popBackStack()
                     navController.navigate(Routes.Game.route)
                 }
             ) {

@@ -1,8 +1,5 @@
 package com.example.memory.viewModels
 
-import android.util.Log
-import androidx.compose.material.icons.Icons
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -13,12 +10,12 @@ import com.example.memory.models.MemoryCard
 import com.example.memory.models.MemoryCardState
 import com.example.memory.models.MemoryDificulty
 import com.example.memory.models.MemoryStetings
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
+import kotlin.time.TimeMark
+import kotlin.time.TimeSource
 
 class MemoryViewModel: ViewModel() {
     val dificulies = MemoryDificulty.entries.map { it.toString() }.toList()
-    var isMenuDropdownExpanded = MutableLiveData(false)
+    var menuStarted = MutableLiveData(false) // Per saver si ja has estat al menu al menys 1 cop abans
     var showingHelpDialog = MutableLiveData(false)
     var setings by mutableStateOf(MemoryStetings())
         private set
@@ -43,9 +40,8 @@ class MemoryViewModel: ViewModel() {
     private var clickedCard2 = -1
     val sleep = MutableLiveData(false)
 
-    fun clickDropdown(isExpanded: Boolean) {
-        isMenuDropdownExpanded.value = isExpanded
-    }
+    private val _name = MutableLiveData("")
+    val name = _name
 
     fun showHelpDialog() {
         showingHelpDialog.value = true
@@ -132,6 +128,7 @@ class MemoryViewModel: ViewModel() {
             memoryCardsList[clickedCard].copy(memoryCardState = MemoryCardState.AMAGADA)
         memoryCardsList[clickedCard2] =
             memoryCardsList[clickedCard2].copy(memoryCardState = MemoryCardState.AMAGADA)
+
         setings = setings.copy(fallos = setings.fallos + 1)
         setings = setings.copy(movimientos = setings.movimientos + 1)
         clickedCard = -1
@@ -145,6 +142,10 @@ class MemoryViewModel: ViewModel() {
         setings = setings.copy(
             points = setings.points + (setings.aciertos * 2) - setings.fallos
         )
+    }
+
+    fun setName(name: String) {
+        _name.value = name
     }
 
     fun saveGameResult() {
