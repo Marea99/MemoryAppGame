@@ -159,6 +159,5 @@ class MemoryViewModel: ViewModel() {
             aciertos = 0,
             fallos = 0
         )
-        _name.value = ""
     }
 }
