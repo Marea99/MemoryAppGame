@@ -117,7 +117,9 @@ fun ResultBodyView(paddingValues: PaddingValues, viewModel: MemoryViewModel, nav
                 )
                 Button(
                     modifier = Modifier,
-                    onClick = { /*TODO*/ }
+                    onClick = {
+                        viewModel.saveGameResult()
+                    }
                 ) {
                     Icon(
                         imageVector = Icons.Default.Lock,
