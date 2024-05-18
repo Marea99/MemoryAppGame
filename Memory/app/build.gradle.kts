@@ -52,9 +52,6 @@ android {
 dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.runtime.livedata)
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.ktx)
-    //kapt("androidx.room:room-comiler:2.6.1")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
