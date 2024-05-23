@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -36,7 +37,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.memory.R
-import com.example.memory.Routes
+import com.example.memory.navigation.Routes
 import com.example.memory.components.HelpDialog
 import com.example.memory.components.MyOwnRadioButtons
 import com.example.memory.viewModels.MemoryViewModel
@@ -50,7 +51,16 @@ fun MenuView(navController: NavController, viewModel: MemoryViewModel) {
                 title = { Text(text = "Memory", color = MaterialTheme.colorScheme.onPrimary) },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary
-                )
+                ),
+                navigationIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Menu,
+                        contentDescription = Icons.Default.Menu.name,
+                        tint = MaterialTheme.colorScheme.onPrimary,
+                        modifier = Modifier
+                            .padding(start = 8.dp)
+                    )
+                }
             )
         }
     ) {

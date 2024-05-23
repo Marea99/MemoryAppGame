@@ -1,19 +1,24 @@
 package com.example.memory.viewModels
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.memory.R
+import com.example.memory.data.Repository
+import com.example.memory.data.gamePoints.GamePoints
 import com.example.memory.models.MemoryCard
 import com.example.memory.models.MemoryCardState
 import com.example.memory.models.MemoryDificulty
 import com.example.memory.models.MemoryStetings
-import kotlin.time.TimeMark
-import kotlin.time.TimeSource
+import kotlinx.coroutines.launch
 
 class MemoryViewModel: ViewModel() {
+    private val repository = Repository()
+
     val dificulies = MemoryDificulty.entries.map { it.toString() }.toList()
     var menuStarted = MutableLiveData(false) // Per saver si ja has estat al menu al menys 1 cop abans
     var showingHelpDialog = MutableLiveData(false)
@@ -42,6 +47,9 @@ class MemoryViewModel: ViewModel() {
 
     private val _name = MutableLiveData("")
     val name = _name
+
+    private val _savedData = MutableLiveData(false)
+    val savedData = _savedData
 
     fun showHelpDialog() {
         showingHelpDialog.value = true
@@ -149,7 +157,19 @@ class MemoryViewModel: ViewModel() {
     }
 
     fun saveGameResult() {
+        val gamePoints = GamePoints(
+            name = _name.value ?: "Anon",
+            points = setings.points,
+            difficulty = setings.dificulty
+        )
 
+        viewModelScope.launch {
+            repository.saveGamePointsRegister(gamePoints)
+        }
+        //Log.i("SAVE", "${gamePoints.name} has ${gamePoints.points} in the ${gamePoints.difficulty} mode.")
+
+        _savedData.value = true
+        _name.value = ""
     }
 
     fun resetGame() {
@@ -160,5 +180,6 @@ class MemoryViewModel: ViewModel() {
             fallos = 0
         )
         _name.value = ""
+        _savedData.value = false
     }
 }

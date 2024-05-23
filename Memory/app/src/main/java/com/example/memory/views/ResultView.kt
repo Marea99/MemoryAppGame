@@ -32,7 +32,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.memory.Routes
+import com.example.memory.navigation.Routes
 import com.example.memory.viewModels.MemoryViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -55,6 +55,7 @@ fun ResultView(navController: NavController, viewModel: MemoryViewModel) {
 @Composable
 fun ResultBodyView(paddingValues: PaddingValues, viewModel: MemoryViewModel, navController: NavController) {
     val name by viewModel.name.observeAsState("")
+    val savedData by viewModel.savedData.observeAsState(false)
 
     Column(
         modifier = Modifier
@@ -95,11 +96,10 @@ fun ResultBodyView(paddingValues: PaddingValues, viewModel: MemoryViewModel, nav
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.Start
         ) {
-            Row {
-                Text(text = "Si desea guardar su resultado introduzca su nombre y pulse el boton \"Candado\"")
-                Icon(imageVector = Icons.Default.Lock, contentDescription = "Save results")
-                Text(text = "\"")
-
+            if (savedData) {
+                Text(text = "Tu resultado se ha guardado correctamente.")
+            } else {
+                Text(text = "Si desea guardar su resultado introduzca su nombre y pulse el boton")
             }
             
             Spacer(modifier = Modifier.padding(vertical = 4.dp))
@@ -113,13 +113,15 @@ fun ResultBodyView(paddingValues: PaddingValues, viewModel: MemoryViewModel, nav
                     value = name,
                     onValueChange = {
                         viewModel.setName(it)
-                    }
+                    },
+                    enabled = !savedData
                 )
                 Button(
                     modifier = Modifier,
                     onClick = {
                         viewModel.saveGameResult()
-                    }
+                    },
+                    enabled = !savedData
                 ) {
                     Icon(
                         imageVector = Icons.Default.Lock,

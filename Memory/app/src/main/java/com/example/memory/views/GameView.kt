@@ -2,6 +2,7 @@ package com.example.memory.views
 
 import android.util.Log
 import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -10,8 +11,12 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -24,7 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.memory.Routes
+import com.example.memory.navigation.Routes
 import com.example.memory.components.MemoryCardComponent
 import com.example.memory.viewModels.MemoryViewModel
 import kotlinx.coroutines.delay
@@ -38,7 +43,19 @@ fun GameView(navController: NavController, viewModel: MemoryViewModel) {
                 title = { Text(text = "Memory", color = MaterialTheme.colorScheme.onPrimary) },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary
-                )
+                ),
+                navigationIcon = {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = Icons.Default.Menu.name,
+                        tint = MaterialTheme.colorScheme.onPrimary,
+                        modifier = Modifier
+                            .padding(start = 8.dp)
+                            .clickable {
+                            navController.popBackStack()
+                        }
+                    )
+                }
             )
         }
     ) {
