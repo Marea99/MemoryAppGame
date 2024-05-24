@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 class MemoryViewModel: ViewModel() {
     private val repository = Repository()
 
-    val dificulies = MemoryDificulty.entries.map { it.toString() }.toList()
+    val dificulies = MemoryDificulty.entries.map { it.name }.toList()
     var menuStarted = MutableLiveData(false) // Per saver si ja has estat al menu al menys 1 cop abans
     var showingHelpDialog = MutableLiveData(false)
     var setings by mutableStateOf(MemoryStetings())

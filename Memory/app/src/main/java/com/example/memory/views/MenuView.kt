@@ -111,7 +111,8 @@ fun MenuBodyView(paddingValues: PaddingValues, viewModel: MemoryViewModel, navCo
                 .border(4.dp, rainbowColorsBrush, RoundedCornerShape(16.dp))
         )
 
-        MyOwnRadioButtons(viewModel.setings.dificulty.toString(), viewModel.dificulies, viewModel)
+        Log.i("DIF", viewModel.setings.dificulty.toString())
+        MyOwnRadioButtons(viewModel.setings.dificulty.name, viewModel.dificulies, viewModel)
 
         Row(
             modifier = Modifier

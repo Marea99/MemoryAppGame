@@ -17,7 +17,7 @@ interface GamePointsDao  {
     @Query("SELECT * FROM GamePointsEntity WHERE difficulty = :difficulty ORDER BY points asc")
     suspend fun getHardGamePointsRegisters(difficulty: MemoryDificulty = MemoryDificulty.Dificil): MutableList<GamePoints>
 
-    @Query("SELECT * FROM GamePointsEntity ORDER BY points asc")
+    @Query("SELECT * FROM GamePointsEntity ORDER BY difficulty, points asc")
     suspend fun getAllGamePointsRegisters(): MutableList<GamePoints>
 
     @Insert
@@ -28,4 +28,7 @@ interface GamePointsDao  {
 
     @Query("DELETE FROM GamePointsEntity WHERE id = :id")
     suspend fun deleteGamePointsRegisterById(id: Int)
+
+    @Query("DELETE FROM GamePointsEntity")
+    suspend fun deleteAllGamePointsRegisters()
 }

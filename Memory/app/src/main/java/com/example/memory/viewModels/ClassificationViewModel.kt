@@ -13,9 +13,15 @@ class ClassificationViewModel: ViewModel() {
     private val _registers = MutableLiveData<List<GamePoints>>()
     val registers = _registers
 
-    fun getAllRegisters(){
+    fun getAllRegisters() {
         viewModelScope.launch {
             _registers.value = repository.getAllGamePointsRegisters()
+        }
+    }
+
+    fun deleteAll() {
+        viewModelScope.launch {
+            repository.deleteAllGamePointsRegisters()
         }
     }
 }
