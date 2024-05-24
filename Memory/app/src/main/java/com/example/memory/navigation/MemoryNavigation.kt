@@ -6,7 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.memory.viewModels.ClassificationViewModel
 import com.example.memory.viewModels.MemoryViewModel
-import com.example.memory.views.ClassificatonView
+import com.example.memory.views.ClassificationView
 import com.example.memory.views.GameView
 import com.example.memory.views.MenuView
 import com.example.memory.views.ResultView
@@ -30,7 +30,7 @@ fun NavMemory(memoryViewModel: MemoryViewModel, classificationViewModel: Classif
         }
 
         composable(Routes.Classificaton.route) {
-            ClassificatonView(navController, classificationViewModel)
+            ClassificationView(navController, classificationViewModel)
         }
     }
 }

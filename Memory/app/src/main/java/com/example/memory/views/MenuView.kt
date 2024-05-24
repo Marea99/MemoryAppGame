@@ -3,6 +3,7 @@ package com.example.memory.views
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -59,6 +60,9 @@ fun MenuView(navController: NavController, viewModel: MemoryViewModel) {
                         tint = MaterialTheme.colorScheme.onPrimary,
                         modifier = Modifier
                             .padding(start = 8.dp)
+                            .clickable {
+                                navController.navigate(Routes.Classificaton.route)
+                            }
                     )
                 }
             )

@@ -13,6 +13,9 @@ class Repository {
     suspend fun deleteGamePintsRegister(gamePoints: GamePoints) =
         daoInterface.deleteGamePointsRegister(gamePoints)
 
+    suspend fun deleteGamePintsRegisterById(id: Int) =
+        daoInterface.deleteGamePointsRegisterById(id)
+
     suspend fun getEasyGamePointsRegisters() =
         daoInterface.getEasyGamePointsRegisters()
 
