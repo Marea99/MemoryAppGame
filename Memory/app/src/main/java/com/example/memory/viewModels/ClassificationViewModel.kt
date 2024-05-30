@@ -26,7 +26,7 @@ class ClassificationViewModel: ViewModel() {
     val showDifClassification = _showDifClassification
 
     fun getRegisters(difficulty: String) {
-        Log.i("GET_REGISTERS", difficulty)
+        //Log.i("GET_REGISTERS", difficulty)
         viewModelScope.launch {
             when (difficulty) {
                 difficulties[0] ->

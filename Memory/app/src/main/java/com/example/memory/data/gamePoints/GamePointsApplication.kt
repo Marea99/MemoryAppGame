@@ -14,6 +14,6 @@ class GamePointsApplication: Application() {
             this,
             GamePointsDatabase::class.java,
             "GamePointsDatabase"
-        ).build()
+        ).fallbackToDestructiveMigration().build()
     }
 }

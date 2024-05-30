@@ -99,7 +99,7 @@ fun BottomNavigationBar(viewModel: ClassificationViewModel) {
                     tint = difficultiesColor[item] ?: MaterialTheme.colorScheme.onSurface
                 ) },
                 label = { Text(text = item) },
-                alwaysShowLabel = false
+                alwaysShowLabel = true
             )
         }
     }
