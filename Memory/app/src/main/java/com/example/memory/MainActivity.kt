@@ -9,17 +9,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
+import com.example.compose.MemoryTheme
 import com.example.memory.navigation.NavMemory
-import com.example.memory.navigation.Routes
-import com.example.memory.ui.theme.MemoryTheme
 import com.example.memory.viewModels.ClassificationViewModel
 import com.example.memory.viewModels.MemoryViewModel
-import com.example.memory.views.GameView
-import com.example.memory.views.MenuView
-import com.example.memory.views.ResultView
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
