@@ -108,8 +108,9 @@ fun GameBodyView(paddingValues: PaddingValues, viewModel: MemoryViewModel, navCo
     LaunchedEffect(gameOver) {
         Log.i("GAME OVER", gameOver.toString())
         if (gameOver) {
+            viewModel.finalPartida()
+
             delay(750)
-            viewModel.calcularPuntuacion()
             navController.popBackStack()
             navController.navigate(Routes.Results.route)
         }

@@ -135,7 +135,7 @@ fun MenuBodyView(paddingValues: PaddingValues, viewModel: MemoryViewModel, navCo
                     .padding(start = 4.dp),
                 shape = RoundedCornerShape(8.dp),
                 onClick = {
-                    viewModel.getMemoryCardList()
+                    viewModel.iniciPartida()
 
                     if (menuStarted)
                         navController.popBackStack()

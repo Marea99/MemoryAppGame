@@ -158,7 +158,7 @@ fun ResultBodyView(paddingValues: PaddingValues, viewModel: MemoryViewModel, nav
                 shape = RoundedCornerShape(8.dp),
                 onClick = {
                     viewModel.resetGame()
-                    viewModel.getMemoryCardList()
+                    viewModel.iniciPartida()
                     navController.popBackStack()
                     navController.navigate(Routes.Game.route)
                 }

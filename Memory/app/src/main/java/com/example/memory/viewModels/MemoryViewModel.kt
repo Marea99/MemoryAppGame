@@ -75,7 +75,14 @@ class MemoryViewModel: ViewModel() {
         )
     }
 
-    fun getMemoryCardList() {
+
+
+    fun iniciPartida() {
+        setings = setings.copy(timeStart = System.currentTimeMillis())
+        getMemoryCardList()
+    }
+
+    private fun getMemoryCardList() {
         val numCards = setings.numberOfCardPairs
 
         memoryCardsList = memoryCardSet
@@ -146,9 +153,31 @@ class MemoryViewModel: ViewModel() {
 
     }
 
-    fun calcularPuntuacion() {
+    fun finalPartida() {
+        setings = setings.copy(timeEnd = System.currentTimeMillis())
+        calcularPuntuacion()
+    }
+
+    private fun calcularPuntuacion() {
+        val temps = (setings.timeEnd - setings.timeStart) / 1000
+        Log.i("CALC_POINTS", "temps ${temps}s")
+
+        val plusTiempo: Int = when (setings.dificulty) {
+            MemoryDificulty.Facil,
+            MemoryDificulty.Media -> {
+                if (temps <= 30) 10
+                else if (temps <= 60) 5
+                else 0
+            }
+            MemoryDificulty.Dificil -> {
+                if (temps <= 50) 10
+                else if (temps <= 80) 5
+                else 0
+            }
+        }
+
         setings = setings.copy(
-            points = setings.points + (setings.aciertos * 2) - setings.fallos
+            points = (setings.aciertos * 2) - setings.fallos + plusTiempo
         )
     }
 
@@ -175,9 +204,11 @@ class MemoryViewModel: ViewModel() {
     fun resetGame() {
         setings = setings.copy(
             movimientos = 0,
-            points = 10,
+            points = 0,
             aciertos = 0,
-            fallos = 0
+            fallos = 0,
+            timeStart = 0L,
+            timeEnd = 0L
         )
         _name.value = ""
         _savedData.value = false

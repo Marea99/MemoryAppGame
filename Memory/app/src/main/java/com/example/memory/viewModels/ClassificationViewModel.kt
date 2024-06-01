@@ -1,8 +1,5 @@
 package com.example.memory.viewModels
 
-import android.util.Log
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -50,9 +47,8 @@ class ClassificationViewModel: ViewModel() {
     fun deleteRegisterById(id: Int) {
         viewModelScope.launch {
             repository.deleteGamePintsRegisterById(id)
+            getRegisters(_showDifClassification.value!!)
         }
-
-        getRegisters(_showDifClassification.value!!)
     }
 
     fun setShowDiffClassification(difficulty: String) {
