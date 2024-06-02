@@ -22,6 +22,8 @@ class MemoryViewModel: ViewModel() {
     val dificulies = MemoryDificulty.entries.map { it.name }.toList()
     var menuStarted = MutableLiveData(false) // Per saver si ja has estat al menu al menys 1 cop abans
     var showingHelpDialog = MutableLiveData(false)
+        private set
+
     var setings by mutableStateOf(MemoryStetings())
         private set
 

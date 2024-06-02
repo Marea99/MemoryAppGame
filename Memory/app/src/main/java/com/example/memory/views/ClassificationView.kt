@@ -147,7 +147,7 @@ fun ClassificationBodyView(paddingValues: PaddingValues, viewModel: Classificati
                         text = register.points.toString(),
                         modifier = Modifier.weight(0.3F)
                     )
-                    
+
                     Icon(
                         imageVector = Icons.Outlined.Delete,
                         contentDescription = "Delete",
