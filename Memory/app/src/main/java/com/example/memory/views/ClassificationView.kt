@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.outlined.Delete
@@ -110,7 +112,7 @@ fun BottomNavigationBar(viewModel: ClassificationViewModel) {
 fun ClassificationBodyView(paddingValues: PaddingValues, viewModel: ClassificationViewModel) {
     val registers: List<GamePoints> by viewModel.registers.observeAsState(emptyList())
 
-    Column(
+    LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(paddingValues)
@@ -118,7 +120,7 @@ fun ClassificationBodyView(paddingValues: PaddingValues, viewModel: Classificati
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        registers.forEach { register ->
+        items(registers) { register ->
             Card(
                 modifier = Modifier
                     .fillMaxWidth()

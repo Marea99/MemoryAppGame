@@ -49,6 +49,7 @@ import com.example.memory.R
 import com.example.memory.navigation.Routes
 import com.example.memory.components.HelpDialog
 import com.example.memory.components.MyOwnRadioButtons
+import com.example.memory.components.SoundEffects
 import com.example.memory.models.DrawerItems
 import com.example.memory.viewModels.MemoryViewModel
 import kotlinx.coroutines.launch
@@ -180,6 +181,9 @@ fun MenuBodyView(paddingValues: PaddingValues, viewModel: MemoryViewModel, navCo
                 }
             ) {
                 Icon(imageVector = Icons.Default.PlayArrow, contentDescription = "Play")
+                if (false) {
+                    SoundEffects(sound = R.raw.put_cards).PlaySoundEffect()
+                }
             }
         }
 

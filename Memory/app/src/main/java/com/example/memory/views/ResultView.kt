@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Lock
@@ -36,6 +38,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -44,6 +47,7 @@ import androidx.navigation.NavController
 import com.example.memory.models.DrawerItems
 import com.example.memory.navigation.Routes
 import com.example.memory.viewModels.MemoryViewModel
+import com.example.memory.R
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -161,7 +165,9 @@ fun ResultBodyView(paddingValues: PaddingValues, viewModel: MemoryViewModel, nav
                     onValueChange = {
                         viewModel.setName(it)
                     },
-                    enabled = !savedData
+                    enabled = !savedData,
+                    singleLine = true,
+                    maxLines = 1
                 )
                 Button(
                     modifier = Modifier,
@@ -171,7 +177,7 @@ fun ResultBodyView(paddingValues: PaddingValues, viewModel: MemoryViewModel, nav
                     enabled = !savedData
                 ) {
                     Icon(
-                        imageVector = Icons.Default.Lock,
+                        painter = painterResource(id = R.drawable.baseline_save_alt_24),
                         contentDescription = "Save results",
                         modifier = Modifier.padding(vertical = 8.dp)
                     )
