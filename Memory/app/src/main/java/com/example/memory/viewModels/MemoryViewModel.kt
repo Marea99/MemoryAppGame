@@ -1,6 +1,7 @@
 package com.example.memory.viewModels
 
 import android.util.Log
+import androidx.compose.material3.Snackbar
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -52,6 +53,41 @@ class MemoryViewModel: ViewModel() {
 
     private val _savedData = MutableLiveData(false)
     val savedData = _savedData
+
+    private val _playSoundEffect1 = MutableLiveData(false)
+    val playSoundEffect1 = _playSoundEffect1
+    private val _playSoundEffect2 = MutableLiveData(false)
+    val playSoundEffect2 = _playSoundEffect2
+    private val _playSoundEffect3 = MutableLiveData(false)
+    val playSoundEffect3 = _playSoundEffect3
+
+    private val _endSoundEffect = MutableLiveData(false)
+    val endSoundEffect = _endSoundEffect
+
+    fun startSoundEffect(num: Int = 1) {
+        when (num) {
+            1 -> _playSoundEffect1.value = true
+            2 -> _playSoundEffect2.value = true
+            3 -> _playSoundEffect3.value = true
+            else ->
+                _playSoundEffect1.value = true
+        }
+    }
+
+    fun stopSoundEffect(num: Int = 1) {
+        when (num) {
+            1 -> _playSoundEffect1.value = false
+            2 -> _playSoundEffect2.value = false
+            3 -> _playSoundEffect3.value = false
+            else ->
+                _playSoundEffect1.value = false
+        }
+        _endSoundEffect.value = true
+    }
+
+    fun endSoundEffectToFalse() {
+        _endSoundEffect.value = true
+    }
 
     fun showHelpDialog() {
         showingHelpDialog.value = true
@@ -195,7 +231,11 @@ class MemoryViewModel: ViewModel() {
         )
 
         viewModelScope.launch {
-            repository.saveGamePointsRegister(gamePoints)
+            try {
+                repository.saveGamePointsRegister(gamePoints)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
         //Log.i("SAVE", "${gamePoints.name} has ${gamePoints.points} in the ${gamePoints.difficulty} mode.")
 

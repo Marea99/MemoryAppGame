@@ -6,9 +6,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -19,6 +22,7 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.Divider
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -130,14 +134,41 @@ fun ResultBodyView(paddingValues: PaddingValues, viewModel: MemoryViewModel, nav
                 fontFamily = FontFamily.Monospace
             )
 
-            Spacer(modifier = Modifier.padding(vertical = 4.dp))
+            Spacer(modifier = Modifier.padding(vertical = 16.dp))
 
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(text = viewModel.setings.points.toString(), style = MaterialTheme.typography.headlineMedium)
+                    Text(text = "Puntos", style = MaterialTheme.typography.titleLarge)
+                }
+
+                Divider(modifier = Modifier.height(40.dp).width(2.dp),
+                    color = MaterialTheme.colorScheme.secondary)
+
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(text = "${(viewModel.setings.timeEnd-viewModel.setings.timeStart)/1000}s",
+                        style = MaterialTheme.typography.headlineMedium)
+                    Text(text = "Tiempo", style = MaterialTheme.typography.titleLarge)
+                }
+            }
+            /*
             Text(
                 text = "Has conseguido solucionar el memori ${viewModel.setings.dificulty} " +
                     "en ${(viewModel.setings.timeEnd-viewModel.setings.timeStart)/1000}s y " +
                     "con un todal de ${viewModel.setings.points} puntos.",
                 fontFamily = FontFamily.Monospace
             )
+             */
         }
 
         Column(

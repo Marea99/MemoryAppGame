@@ -25,33 +25,49 @@ class ClassificationViewModel: ViewModel() {
     fun getRegisters(difficulty: String) {
         //Log.i("GET_REGISTERS", difficulty)
         viewModelScope.launch {
-            when (difficulty) {
-                difficulties[0] ->
-                    _registers.value = repository.getEasyGamePointsRegisters()
-                difficulties[1] ->
-                    _registers.value = repository.getMediumGamePointsRegisters()
-                difficulties[2] ->
-                    _registers.value = repository.getHardGamePintsRegisters()
-                difficulties[3] ->
-                    _registers.value = repository.getAllGamePointsRegisters()
+            try {
+                when (difficulty) {
+                    difficulties[0] ->
+                        _registers.value = repository.getEasyGamePointsRegisters()
+                    difficulties[1] ->
+                        _registers.value = repository.getMediumGamePointsRegisters()
+                    difficulties[2] ->
+                        _registers.value = repository.getHardGamePintsRegisters()
+                    difficulties[3] ->
+                        _registers.value = repository.getAllGamePointsRegisters()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }
 
     fun deleteAllRegisters() {
         viewModelScope.launch {
-            repository.deleteAllGamePointsRegisters()
+            try {
+                repository.deleteAllGamePointsRegisters()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
     fun deleteRegisterById(id: Int) {
         viewModelScope.launch {
-            repository.deleteGamePintsRegisterById(id)
-            getRegisters(_showDifClassification.value!!)
+            try {
+                repository.deleteGamePintsRegisterById(id)
+                getRegisters(_showDifClassification.value!!)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
     fun setShowDiffClassification(difficulty: String) {
-        _showDifClassification.value = difficulty
+        try {
+            _showDifClassification.value = difficulty
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }

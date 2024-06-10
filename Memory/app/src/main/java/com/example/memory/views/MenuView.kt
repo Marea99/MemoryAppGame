@@ -42,6 +42,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -113,6 +114,9 @@ fun MenuView(navController: NavController, viewModel: MemoryViewModel) {
 fun MenuBodyView(paddingValues: PaddingValues, viewModel: MemoryViewModel, navController: NavController) {
     val showingHelpDialog by viewModel.showingHelpDialog.observeAsState(false)
     val menuStarted: Boolean by viewModel.sleep.observeAsState(false)
+    val soundEffects = SoundEffects()
+    val playSoundEffect: Boolean by viewModel.playSoundEffect1.observeAsState(false)
+    val endSoundEffect: Boolean by viewModel.endSoundEffect.observeAsState(false)
 
     val rainbowColorsBrush = remember {
         Brush.sweepGradient(
@@ -177,12 +181,17 @@ fun MenuBodyView(paddingValues: PaddingValues, viewModel: MemoryViewModel, navCo
                     else
                         viewModel.menuStarted.value = false
 
+                    viewModel.startSoundEffect()
                     navController.navigate(Routes.Game.route)
                 }
             ) {
                 Icon(imageVector = Icons.Default.PlayArrow, contentDescription = "Play")
-                if (false) {
-                    SoundEffects(sound = R.raw.put_cards).PlaySoundEffect()
+                if (playSoundEffect) {
+                    soundEffects.PlaySoundEffect(sound = R.raw.put_cards)
+                    viewModel.stopSoundEffect()
+                } else if (endSoundEffect) {
+                    soundEffects.EndSoundEffect()
+                    viewModel.endSoundEffectToFalse()
                 }
             }
         }

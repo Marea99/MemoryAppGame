@@ -7,11 +7,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import com.example.memory.R
 
-class SoundEffects (val sound: Int) {
+class SoundEffects () {
     private var mediaPlayer: MediaPlayer? = null
 
     @Composable
-    fun PlaySoundEffect() {
+    fun PlaySoundEffect(sound: Int) {
         mediaPlayer = MediaPlayer.create(LocalContext.current, sound)
         mediaPlayer?.start()
         mediaPlayer?.setVolume(0.5F, 0.5F)

@@ -31,7 +31,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.memory.navigation.Routes
 import com.example.memory.components.MemoryCardComponent
+import com.example.memory.components.SoundEffects
 import com.example.memory.viewModels.MemoryViewModel
+import com.example.memory.R
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -52,8 +54,8 @@ fun GameView(navController: NavController, viewModel: MemoryViewModel) {
                         modifier = Modifier
                             .padding(start = 8.dp)
                             .clickable {
-                            navController.popBackStack()
-                        }
+                                navController.popBackStack()
+                            }
                     )
                 }
             )
@@ -68,6 +70,11 @@ fun GameView(navController: NavController, viewModel: MemoryViewModel) {
 fun GameBodyView(paddingValues: PaddingValues, viewModel: MemoryViewModel, navController: NavController) {
     val sleep: Boolean by viewModel.sleep.observeAsState(false)
     val gameOver = viewModel.setings.numberOfCardPairs == viewModel.setings.aciertos
+    val soundEffects = SoundEffects()
+    val playSoundEffect1: Boolean by viewModel.playSoundEffect1.observeAsState(false)
+    val playSoundEffect2: Boolean by viewModel.playSoundEffect1.observeAsState(false)
+    val playSoundEffect3: Boolean by viewModel.playSoundEffect3.observeAsState(false)
+    val endSoundEffect: Boolean by viewModel.endSoundEffect.observeAsState(false)
 
     Column(
         modifier = Modifier
@@ -90,18 +97,31 @@ fun GameBodyView(paddingValues: PaddingValues, viewModel: MemoryViewModel, navCo
                     dificulty = viewModel.setings.dificulty
                 ) {
                     Log.i("CLICK", viewModel.setings.isACardClicked.toString())
-                    if (!viewModel.setings.isACardClicked)
+                    if (!viewModel.setings.isACardClicked) {
                         viewModel.onClickMemoryCard(card.id)
+                        viewModel.startSoundEffect(1)
+                    }
                 }
             }
         }
     }
-
+/*
+    if (playSoundEffect1) soundEffects.PlaySoundEffect(sound = R.raw.turn_card)
+    else if (playSoundEffect2) soundEffects.PlaySoundEffect(sound = R.raw.wrong_mach)
+    else if (playSoundEffect3) soundEffects.PlaySoundEffect(sound = R.raw.end_game)
+    else if (endSoundEffect) {
+        soundEffects.EndSoundEffect()
+        viewModel.endSoundEffectToFalse()
+    }
+*/
     LaunchedEffect(sleep) {
         Log.i("SLEEP", sleep.toString())
+        viewModel.stopSoundEffect(1)
         if (sleep) {
+            viewModel.stopSoundEffect(2)
             delay(1000)
             viewModel.afterSleep()
+            viewModel.stopSoundEffect(2)
         }
     }
 
@@ -109,8 +129,10 @@ fun GameBodyView(paddingValues: PaddingValues, viewModel: MemoryViewModel, navCo
         Log.i("GAME OVER", gameOver.toString())
         if (gameOver) {
             viewModel.finalPartida()
+            viewModel.startSoundEffect(3)
 
             delay(750)
+            viewModel.stopSoundEffect(3)
             navController.popBackStack()
             navController.navigate(Routes.Results.route)
         }
