@@ -32,6 +32,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
@@ -115,8 +117,7 @@ fun MenuBodyView(paddingValues: PaddingValues, viewModel: MemoryViewModel, navCo
     val showingHelpDialog by viewModel.showingHelpDialog.observeAsState(false)
     val menuStarted: Boolean by viewModel.sleep.observeAsState(false)
     val soundEffects = SoundEffects()
-    val playSoundEffect: Boolean by viewModel.playSoundEffect1.observeAsState(false)
-    val endSoundEffect: Boolean by viewModel.endSoundEffect.observeAsState(false)
+    val playPutCardsSound by viewModel.playPutCardsSound.observeAsState(false)
 
     val rainbowColorsBrush = remember {
         Brush.sweepGradient(
@@ -181,17 +182,16 @@ fun MenuBodyView(paddingValues: PaddingValues, viewModel: MemoryViewModel, navCo
                     else
                         viewModel.menuStarted.value = false
 
-                    viewModel.startSoundEffect()
+                    viewModel.setPlayPutCardsSound(true)
                     navController.navigate(Routes.Game.route)
                 }
             ) {
                 Icon(imageVector = Icons.Default.PlayArrow, contentDescription = "Play")
-                if (playSoundEffect) {
+                if (playPutCardsSound) {
+                    viewModel.setPlayPutCardsSound(false)
                     soundEffects.PlaySoundEffect(sound = R.raw.put_cards)
-                    viewModel.stopSoundEffect()
-                } else if (endSoundEffect) {
-                    soundEffects.EndSoundEffect()
-                    viewModel.endSoundEffectToFalse()
+                    Log.i("SOUND", "Play Put cards sound (${playPutCardsSound})")
+
                 }
             }
         }

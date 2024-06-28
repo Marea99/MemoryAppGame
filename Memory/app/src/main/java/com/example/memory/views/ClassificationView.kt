@@ -44,6 +44,8 @@ import com.example.memory.viewModels.ClassificationViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ClassificationView(navController: NavController, viewModel: ClassificationViewModel) {
+    val showDifClassification by viewModel.showDifClassification.observeAsState("All")
+
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -67,8 +69,8 @@ fun ClassificationView(navController: NavController, viewModel: ClassificationVi
             )
         },
         bottomBar = {
-            viewModel.getRegisters("All")
-            BottomNavigationBar(viewModel)
+            viewModel.getRegisters(showDifClassification)
+            BottomNavigationBar(viewModel,showDifClassification)
         }
     ) {
         ClassificationBodyView(it, viewModel)
@@ -76,8 +78,8 @@ fun ClassificationView(navController: NavController, viewModel: ClassificationVi
 }
 
 @Composable
-fun BottomNavigationBar(viewModel: ClassificationViewModel) {
-    val showDifClassification by viewModel.showDifClassification.observeAsState("All")
+fun BottomNavigationBar(viewModel: ClassificationViewModel, showDifClassification: String) {
+    //val showDifClassification by viewModel.showDifClassification.observeAsState("All")
     val difficultiesColor = mapOf(
         viewModel.difficulties[0] to Color(0xFF4CAF50),
         viewModel.difficulties[1] to Color(0xFFFFC107),

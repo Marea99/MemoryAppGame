@@ -54,41 +54,6 @@ class MemoryViewModel: ViewModel() {
     private val _savedData = MutableLiveData(false)
     val savedData = _savedData
 
-    private val _playSoundEffect1 = MutableLiveData(false)
-    val playSoundEffect1 = _playSoundEffect1
-    private val _playSoundEffect2 = MutableLiveData(false)
-    val playSoundEffect2 = _playSoundEffect2
-    private val _playSoundEffect3 = MutableLiveData(false)
-    val playSoundEffect3 = _playSoundEffect3
-
-    private val _endSoundEffect = MutableLiveData(false)
-    val endSoundEffect = _endSoundEffect
-
-    fun startSoundEffect(num: Int = 1) {
-        when (num) {
-            1 -> _playSoundEffect1.value = true
-            2 -> _playSoundEffect2.value = true
-            3 -> _playSoundEffect3.value = true
-            else ->
-                _playSoundEffect1.value = true
-        }
-    }
-
-    fun stopSoundEffect(num: Int = 1) {
-        when (num) {
-            1 -> _playSoundEffect1.value = false
-            2 -> _playSoundEffect2.value = false
-            3 -> _playSoundEffect3.value = false
-            else ->
-                _playSoundEffect1.value = false
-        }
-        _endSoundEffect.value = true
-    }
-
-    fun endSoundEffectToFalse() {
-        _endSoundEffect.value = true
-    }
-
     fun showHelpDialog() {
         showingHelpDialog.value = true
     }
@@ -224,6 +189,8 @@ class MemoryViewModel: ViewModel() {
     }
 
     fun saveGameResult() {
+        if (_name.value.isNullOrEmpty())
+            _name.value = "Anon"
         val gamePoints = GamePoints(
             name = _name.value ?: "Anon",
             points = setings.points,
@@ -240,7 +207,6 @@ class MemoryViewModel: ViewModel() {
         //Log.i("SAVE", "${gamePoints.name} has ${gamePoints.points} in the ${gamePoints.difficulty} mode.")
 
         _savedData.value = true
-        _name.value = ""
     }
 
     fun resetGame() {
@@ -254,5 +220,31 @@ class MemoryViewModel: ViewModel() {
         )
         _name.value = ""
         _savedData.value = false
+    }
+
+    /* ----------- SOUND ----------- */
+    private val _playEndGameSound = MutableLiveData(false)
+    val playEndGameSound = _playEndGameSound
+    private val _playPutCardsSound = MutableLiveData(false)
+    val playPutCardsSound = _playPutCardsSound
+    private val _playTurnCardsSound = MutableLiveData(false)
+    val playTurnCardsSound = _playTurnCardsSound
+    private val _playWrongMachSound = MutableLiveData(false)
+    val playWrongMachSound = _playWrongMachSound
+
+    fun setPlayEndGameSound(isPlaying: Boolean) {
+        _playEndGameSound.value = isPlaying
+    }
+
+    fun setPlayPutCardsSound(isPlaying: Boolean) {
+        _playPutCardsSound.value = isPlaying
+    }
+
+    fun setPlayTurnCardsSound(isPlaying: Boolean) {
+        _playTurnCardsSound.value = isPlaying
+    }
+
+    fun setPlayWrongMachSound(isPlaying: Boolean) {
+        _playWrongMachSound.value = isPlaying
     }
 }
