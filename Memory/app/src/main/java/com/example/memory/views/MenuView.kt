@@ -32,8 +32,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
@@ -43,8 +41,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -151,7 +147,7 @@ fun MenuBodyView(paddingValues: PaddingValues, viewModel: MemoryViewModel, navCo
                 .border(4.dp, rainbowColorsBrush, RoundedCornerShape(16.dp))
         )
 
-        Log.i("DIF", viewModel.setings.dificulty.toString())
+        //Log.i("DIF", viewModel.setings.dificulty.toString())
         MyOwnRadioButtons(viewModel.setings.dificulty.name, viewModel.dificulies, viewModel)
 
         Row(
@@ -190,14 +186,14 @@ fun MenuBodyView(paddingValues: PaddingValues, viewModel: MemoryViewModel, navCo
                 if (playPutCardsSound) {
                     viewModel.setPlayPutCardsSound(false)
                     soundEffects.PlaySoundEffect(sound = R.raw.put_cards)
-                    Log.i("SOUND", "Play Put cards sound (${playPutCardsSound})")
+                    //Log.i("SOUND", "Play Put cards sound (${playPutCardsSound})")
 
                 }
             }
         }
 
         if (showingHelpDialog) {
-            Log.i("HELP", showingHelpDialog.toString())
+            //Log.i("HELP", showingHelpDialog.toString())
             HelpDialog(viewModel)
         }
     }

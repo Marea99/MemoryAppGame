@@ -1,11 +1,8 @@
 package com.example.memory.components
 
 import android.media.MediaPlayer
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import com.example.memory.R
 
 class SoundEffects () {
     private var mediaPlayer: MediaPlayer? = null
